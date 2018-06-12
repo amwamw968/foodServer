@@ -23,6 +23,27 @@ This app was originally generated on Thu Jun 07 2018 20:41:08 GMT+0800 (中国�
 This project's boilerplate is based on an expanded seed app provided by the [Sails core team](https://sailsjs.com/about) to make it easier for you to build on top of ready-made features like authentication, enrollment, email verification, and billing.  For more information, [drop us a line](https://sailsjs.com/support).
 
 
+### 2018-06-12
+1. 问题一
+
+mysql> select * from kidinfo_fav__recipe_fav_recipe;
++----+-------------+-------------------+
+| id | kidinfo_fav | recipe_fav_recipe |
++----+-------------+-------------------+
+|  1 |           4 |                 4 |
+|  2 |           4 |                 4 |
+|  3 |           4 |                 4 |
+|  4 |           4 |                 4 |
+|  5 |           4 |                 5 |
+|  6 |           3 |                 5 |
+|  7 |           5 |                 5 |
+|  8 |           5 |                 5 |
+|  9 |           4 |                 5 |
+| 10 |           5 |                 5 |
+| 11 |           4 |                 5 |
++----+-------------+-------------------+
+重复addToCollection 
+
 <!--
 Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
 -->
