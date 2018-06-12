@@ -24,24 +24,29 @@ This project's boilerplate is based on an expanded seed app provided by the [Sai
 
 
 ### 2018-06-12
-1. 问题一
+- [ ] 1.问题一
 
-mysql> select * from kidinfo_fav__recipe_fav_recipe;
-+----+-------------+-------------------+
-| id | kidinfo_fav | recipe_fav_recipe |
-+----+-------------+-------------------+
-|  1 |           4 |                 4 |
-|  2 |           4 |                 4 |
-|  3 |           4 |                 4 |
-|  4 |           4 |                 4 |
-|  5 |           4 |                 5 |
-|  6 |           3 |                 5 |
-|  7 |           5 |                 5 |
-|  8 |           5 |                 5 |
-|  9 |           4 |                 5 |
-| 10 |           5 |                 5 |
-| 11 |           4 |                 5 |
-+----+-------------+-------------------+
+mysql> 
+
+select * from kidinfo_fav__recipe_fav_recipe;
+
+
+
+id | kidinfo_fav | recipe_fav_recipe
+---|---|---
+1 | 4 | 4
+2 | 4 | 4
+3 | 4 | 4
+4 | 4 | 4
+5 | 4 | 5
+6 | 3 | 5
+7 | 5 | 5
+8 | 5 | 5
+9 | 4 | 5
+10 | 5 | 5
+11 | 4 | 5 
+
+
 重复addToCollection 
 
 <!--
