@@ -75,56 +75,59 @@ module.exports =  {
     console.log("name:" + name);
     console.log("password:" + password);
 
-    await Kidinfo
-      .findOne({name: name})
-      .exec(async (err, data) => {
-                if (err) {
-                  console.log(err);
-                  return exits.serverError;
-                }
-                if (data != null) {
-                  console.log('用户已经注册，请直接登录');
-                  this.res.json({
-                    code: RESULT_CODE.SUCCESS.code,
-                    msg: RESULT_CODE.SUCCESS.msg,
-                    data: '用户已经注册，请直接登录'
-                  });
-                  return exits.success;
-                }
-                //对密码进行加密存入数据库(在这里加上Kid字符串加密存入数据库)
-                let pass = crypto.createHash('md5').update(password + 'Kid').digest('hex');
-                let token = jwt.sign({name: name}, 'wyjwtsecret', {
-                  expiresIn: "30d"  // 一个月过期
-                });
-
-                let kid = {};
-                kid.name = name;
-                kid.nickname = 'Kid-' + name;
-                kid.password = pass;
-                kid.token = token;
-                kid.icon = '/images/avatar/default_avatar.jpg';
-                kid.brief = 'for baby food';
-                //kid.logindate = new Date();
-                await Kidinfo.create(kid, async (err, result) => {
-                  if (err) {
-                    console.log(err);
-                    console.log('注册失败');
-                    this.res.json({
-                      code: RESULT_CODE.SUCCESS.code,
-                      msg: RESULT_CODE.SUCCESS.msg,
-                      data: '注册失败'
-                    });
-                    return exits.serverError;
-                  }
-                  console.log(result);
-                  console.log('注册成功');
-                  this.res.json({
-                    code: RESULT_CODE.SUCCESS.code,
-                    msg: RESULT_CODE.SUCCESS.msg,
-                    data: '注册成功'
-                  });
-                })
+    let newKid = await Kidinfo.findOne({name: name})
+      .intercept((err) => {
+        console.log(err);
+        return exits.serverError(err);
       });
+
+    if (newKid && newKid !== undefined) {
+      console.log('用户已经注册，请直接登录');
+      this.res.json({
+        code: RESULT_CODE.SUCCESS.code,
+        msg: RESULT_CODE.SUCCESS.msg,
+        data: '用户已经注册，请直接登录'
+      });
+    }
+    else{
+      //对密码进行加密存入数据库(在这里加上Kid字符串加密存入数据库)
+      let pass = crypto.createHash('md5').update(password + 'Kid').digest('hex');
+      let token = jwt.sign({name: name}, 'wyjwtsecret', {
+        expiresIn: "30d"  // 一个月过期
+      });
+
+      let kid = {};
+      kid.name = name;
+      kid.nickname = 'Kid-' + name;
+      kid.password = pass;
+      kid.token = token;
+      kid.icon = '/images/avatar/default_avatar.jpg';
+      kid.brief = 'for baby food';
+      //kid.logindate = new Date();
+
+      let newKidUser = await Kidinfo.create(kid)
+        .intercept((err)=>{
+        console.log(err);
+        console.log('注册失败');
+        this.res.json({
+          code: RESULT_CODE.SUCCESS.code,
+          msg: RESULT_CODE.SUCCESS.msg,
+          data: '注册失败'
+        });
+        return exits.serverError(err);
+      })
+        .fetch();
+
+
+      console.log(newKidUser);
+      console.log('注册成功');
+      this.res.json({
+        code: RESULT_CODE.SUCCESS.code,
+        msg: RESULT_CODE.SUCCESS.msg,
+        data: '注册成功'
+      });
+
+    }
   },
 }
 
