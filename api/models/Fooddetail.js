@@ -6,7 +6,7 @@
  */
 
 
-const recipe = require('./recipe');
+const recipe = require('./Recipe');
 
 
 module.exports = {

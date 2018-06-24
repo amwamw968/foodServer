@@ -1,3 +1,5 @@
+
+const RESULT_CODE  = require('./kidinfo/kidcode') ;
 module.exports = {
 
 
@@ -11,6 +13,10 @@ module.exports = {
 
     success: {
       //viewTemplatePath: 'pages/recipe'
+    },
+    serverError:{
+      statusCode: 404,
+      description: 'serverError',
     }
 
   },
@@ -22,6 +28,15 @@ module.exports = {
     console.log(this.req.query.keyword)
     let that1 = JSON.stringify(this.req.query.keyword);
     console.log(that1)
+    if (that1 === undefined){
+	   this.res.json({
+        code: RESULT_CODE.ARG_ERROR.code,
+        msg: RESULT_CODE.ARG_ERROR.msg,
+        data: RESULT_CODE.ARG_ERROR.msg
+      });
+      return exits.serverError();
+    }
+
     //let SQL_QUERY ="SELECT * FROM recipe  WHERE MATCH (`name`,`amount`) AGAINST ('200' IN BOOLEAN MODE)";
     let SQL_QUERY ="SELECT * FROM recipe  WHERE MATCH (`ingredient_name`,`amount`) AGAINST (" + that1  + " IN BOOLEAN MODE)";
     //let SQL_QUERY2 = "ALTER TABLE recipe ADD FULLTEXT INDEX name_amount  (`name`, `amount`) WITH PARSER ngram";
