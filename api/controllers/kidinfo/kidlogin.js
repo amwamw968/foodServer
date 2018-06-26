@@ -68,13 +68,23 @@ module.exports =  {
    */
   fn: async function (inputs, exits) {
     console.log('kidLogin: ');
-    //console.log(this.req);
-    let name = this.req.query.name;
+    console.log(this.req.query);
+    let name = this.req.query.name ;
     let password = this.req.query.password;
     console.log("req.name");
     console.log(name);
     console.log("req.password");
     console.log(password);
+    if (name === undefined || password === undefined)
+    {
+      this.res.json({
+        code: RESULT_CODE.ARG_ERROR.code,
+        msg: RESULT_CODE.ARG_ERROR.msg,
+        data: RESULT_CODE.ARG_ERROR.msg
+      });
+      //throw  "serverError";
+      return exits.serverError();
+    }
     //let logindate = moment().utc(true).format('x');
     await Kidinfo
       .findOne({name: name})
